@@ -20,4 +20,4 @@ jobs:
     uses: Serph91P/repository.serph91p/.github/workflows/reusable-addon-package.yml@a554cd91f5fd94635b859835ae9cfff14f70a46d
     with:
       addon_id: skin.arctic.fuse.3
-      runtime_entries: '["addon.xml","LICENSE.txt","1080i/","colors/","extras/","fanart.jpg","fonts/","icon.png","language/","media/","shortcuts/"]'
+      runtime_entries_json: '["addon.xml","LICENSE.txt","1080i/","colors/","extras/","fanart.jpg","fonts/","icon.png","language/","media/","shortcuts/"]'
