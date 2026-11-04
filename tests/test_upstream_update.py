@@ -32,6 +32,22 @@ class TrackingTests(unittest.TestCase):
             m.main()
             self.assertEqual(git.call_count,1);self.assertEqual(run.call_count,1);prepare.assert_not_called()
 
+    def test_failed_validation_is_recorded_without_push_or_repeated_dispatch(self):
+        sha='e'*40
+        issue_commands=[]
+        def git(*args):
+            return sha+' refs/heads/omega' if args[0]=='ls-remote' and args[1]==m.UPSTREAM else ''
+        def run(*args,**kwargs):
+            issue_commands.append(args)
+            return Mock(stdout='[]')
+        with patch.object(m,'STATE',ROOT/'.maintenance/upstream.json'),patch.dict(os.environ,{'GITHUB_REPOSITORY':'Serph91P/skin.arctic.fuse.3'}),patch.object(m,'git',side_effect=git) as git_mock,patch.object(m,'run',side_effect=run),patch.object(m,'prepare',side_effect=subprocess.CalledProcessError(1,['python3','-m','unittest'])):
+            m.main()
+        self.assertFalse(any(call.args[0]=='push' for call in git_mock.call_args_list))
+        create=next(cmd for cmd in issue_commands if cmd[:3]==('gh','issue','create'))
+        self.assertIn('<!-- upstream:'+sha+' -->',create[-1])
+        self.assertIn('validation-failed',create[-1])
+        self.assertFalse(any(cmd[:3]==('gh','workflow','run') for cmd in issue_commands))
+
     def fixture(self,conflict=False):
         self.tmp=tempfile.TemporaryDirectory(dir=os.environ.get('TMPDIR'));self.addCleanup(self.tmp.cleanup)
         self.cwd=os.getcwd();os.chdir(self.tmp.name);self.addCleanup(os.chdir,self.cwd)

@@ -85,7 +85,11 @@ def main():
     if git('ls-remote','origin','refs/heads/'+branch):
         result={'status':'candidate','note':'existing immutable candidate recovered'}
     else:
-        result=prepare(sha,branch)
+        try:
+            result=prepare(sha,branch)
+        except subprocess.CalledProcessError:
+            # Record a failed revision once as well; workflow logs hold details.
+            result={'status':'validation-failed'}
         if result['status']=='candidate':
             git('push','origin','HEAD:refs/heads/'+branch)
     body=marker+'\nUpstream omega: `'+sha+'`\n\n'+json.dumps(result,indent=2)
@@ -95,7 +99,7 @@ def main():
         body+='\n\nTest candidate: https://github.com/'+repo+'/compare/omega...'+branch+'?expand=1'
         body+='\nOpen/review a PR from this compare view; no auto-merge/publication.'
     else:
-        body+='\n\nManual conflict resolution required. No reset, force-push, build or publication performed.'
+        body+='\n\nManual resolution required; inspect this workflow run for details. No candidate push, reset, force-push or publication performed.'
     if issues:
         run('gh','issue','edit',str(issues[0]['number']),'--repo',repo,'--body',body)
     else:

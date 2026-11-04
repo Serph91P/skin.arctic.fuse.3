@@ -16,6 +16,9 @@ jobs:
           persist-credentials: false
       - run: python3 -m unittest discover -s tests -v
   package:
+    permissions:
+      contents: read
+      id-token: write
     needs: tests
     uses: Serph91P/repository.serph91p/.github/workflows/reusable-addon-package.yml@a554cd91f5fd94635b859835ae9cfff14f70a46d
     with:
