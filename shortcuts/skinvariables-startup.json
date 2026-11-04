@@ -1,11 +1,11 @@
 {
     "infolabels": {
         "StartupReplaceWindow": "Window(Home).Property(StartupReplaceWindow)",
-        "StartupWindow": "System.StartupWindow",
-        "VideoPath": "Skin.String(Startup.VideoPath)"
+        "StartupWindow": "System.StartupWindow"
     },
     "localize": {
-        "LocalizePVR": "31249"
+        "LocalizePVR": "31249",
+        "LocalizeInit": "31145"
     },
     "values": {
         "ReplaceWindowCommand": [
@@ -18,12 +18,55 @@
     },
     "actions": [
         [{
+            "rules": ["String.IsEmpty(Skin.String(HomeSwitcher.Home.Type))"],
+            "value": "Skin.SetString(HomeSwitcher.Home.Type,Custom)"
+        }],
+        [{
+            "rules": ["String.IsEmpty(Skin.String(HomeSwitcher.Home.Name))"],
+            "value": "Skin.SetString(HomeSwitcher.Home.Name,$LOCALIZE[10000])"
+        }],
+        [{
+            "rules": ["String.IsEmpty(Skin.String(HomeSwitcher.1101.Type))"],
+            "value": "Skin.SetString(HomeSwitcher.1101.Type,Custom)"
+        }],
+        [{
+            "rules": ["String.IsEmpty(Skin.String(HomeSwitcher.1102.Type))"],
+            "value": "Skin.SetString(HomeSwitcher.1102.Type,Custom)"
+        }],
+        [{
+            "rules": ["String.IsEmpty(Skin.String(HomeSwitcher.1103.Type))"],
+            "value": "Skin.SetString(HomeSwitcher.1103.Type,Custom)"
+        }],
+        [{
+            "rules": ["String.IsEmpty(Skin.String(HomeSwitcher.1104.Type))"],
+            "value": "Skin.SetString(HomeSwitcher.1104.Type,Custom)"
+        }],
+        [{
+            "rules": ["String.IsEmpty(Skin.String(HomeSwitcher.1106.Type))"],
+            "value": "Skin.SetString(HomeSwitcher.1106.Type,NextAired)"
+        }],
+        [{
+            "rules": ["String.IsEmpty(Skin.String(HomeSwitcher.1107.Type))"],
+            "value": "Skin.SetString(HomeSwitcher.1107.Type,LiveTV)"
+        }],
+        [{
+            "rules": ["String.IsEmpty(Skin.String(HomeSwitcher.1108.Type))"],
+            "value": "Skin.SetString(HomeSwitcher.1108.Type,Addons)"
+        }],
+        [{
+            "rules": ["String.IsEmpty(Skin.String(HomeSwitcher.1109.Type))"],
+            "value": "Skin.SetString(HomeSwitcher.1109.Type,Custom)"
+        }],
+        [{
             "rules": [
-                "String.IsEmpty(Window.Property(ReloadDone))"],
+                "String.IsEmpty(Window(Home).Property(ReloadDone))"],
             "value": [
+                "SetProperty(SplashIsVisible,True,1198)",
+                "AlarmClock(SplashTimeOut,noop,00:59,silent)",
+                "SetProperty(InitStatus,{LocalizeInit},1198)",
                 [{
                     "rules": [
-                        "String.IsEmpty(Window.Property(ReloadDone))",
+                        "String.IsEmpty(Window(Home).Property(ReloadDone))",
                         "!Skin.HasSetting(DefaultConfig.InitDone)"],
                     "value": [
                         "Skin.SetBool(TMDbHelper.EnableData)",
@@ -32,11 +75,12 @@
                         "Skin.SetBool(TMDbHelper.Service)",
                         "Skin.SetString(Background.DialogImage,Adaptive)",
                         "Skin.SetString(Background.Image,special://skin/extras/backgrounds/blur/purple_blur.jpg)",
-                        "Skin.SetString(HomeSwitcher.1107.Toggle,true)",
                         "Skin.SetString(HomeSwitcher.Home.Shortcut.Path,ActivateWindow(1181))",
                         "Skin.SetString(HomeSwitcher.Home.Spotlight.Path,special://skin/extras/playlists/RandomMovies.xsp)",
                         "Skin.SetString(HomeSwitcher.Home.Spotlight.Target,videos)",
                         "Skin.SetString(HomeSwitcher.Home.Spotlight.Label,Random Movies)",
+                        "Skin.SetString(SetupWizard.WidgetGroup,library)",
+                        "Skin.SetBool(SetupWizard.Pending)",
                         "Skin.SetBool(DefaultConfig.InitDone)"
                     ]
                 }],
@@ -117,6 +161,10 @@
                     "value": "Skin.SetString(HomeSwitcher.Home.Mode,Standard)"
                 }],
                 [{
+                    "rules": ["String.IsEmpty(Skin.String(HomeSwitcher.Search.Mode))"],
+                    "value": "Skin.SetString(HomeSwitcher.Search.Mode,Combined)"
+                }],
+                [{
                     "rules": ["String.IsEmpty(Skin.String(HomeSwitcher.1101.Mode))"],
                     "value": "Skin.SetString(HomeSwitcher.1101.Mode,Standard)"
                 }],
@@ -145,6 +193,10 @@
                     "value": "Skin.SetString(HomeSwitcher.1108.Mode,Wall)"
                 }],
                 [{
+                    "rules": ["String.IsEmpty(Skin.String(HomeSwitcher.1109.Mode))"],
+                    "value": "Skin.SetString(HomeSwitcher.1109.Mode,Standard)"
+                }],
+                [{
                     "rules": ["Skin.HasSetting(TMDbHelper.Service)"],
                     "value": "Skin.SetBool(TMDbHelper.EnableData)"
                 }],
@@ -153,10 +205,9 @@
             ]
         }],
 
-        "SetProperty(ReloadDone,1)",
         "SetProperty(ReloadDone,1,Home)",
 
-        "sleep=0.5",
+        "sleep=1.0",
         {
             "rules": [
                 "!Skin.HasSetting(Startup.DisableWaitForLoad)",
@@ -173,12 +224,6 @@
         {
             "rules": ["!Window.IsVisible(LoginScreen.xml)"],
             "value": "{ReplaceWindowCommand}"
-        },
-        {
-            "rules": ["{VideoPath}!="],
-            "value": [
-                "PlayMedia(\"{VideoPath}\")"
-            ]
         }
     ]
 }

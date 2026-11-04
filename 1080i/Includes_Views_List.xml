@@ -2,11 +2,11 @@
 <includes>
 
     <!-- Basic List -->
-    <include name="View_506_Basic_List">
+    <include name="View_580_Basic_List">
         <include content="View_MediaList_Include">
-            <param name="id">506</param>
+            <param name="id">580</param>
             <param name="viewtype_label">$LOCALIZE[31120]</param>
-            <param name="visible">$EXP[Exp_View_506]</param>
+            <param name="visible">$EXP[Exp_View_580]</param>
             <param name="right">1168</param>
             <param name="top">130</param>
             <param name="item_height">85</param>
@@ -17,12 +17,12 @@
         </include>
     </include>
 
-    <!-- Media List -->
-    <include name="View_507_Media_List">
-        <include content="View_MediaList_Include" condition="Window.IsVisible(videos)">
-            <param name="id">507</param>
-            <param name="viewtype_label">$LOCALIZE[31479]</param>
-            <param name="visible">$EXP[Exp_View_507]</param>
+    <!-- Poster List -->
+    <include name="View_581_Poster_List">
+        <include content="View_MediaList_Include">
+            <param name="id">581</param>
+            <param name="viewtype_label">$LOCALIZE[31635]</param>
+            <param name="visible">$EXP[Exp_View_581]</param>
             <param name="left">0</param>
             <param name="right">510</param>
             <param name="top">130</param>
@@ -32,10 +32,14 @@
             <param name="item_height">85</param>
             <include>View_Media_Poster</include>
         </include>
-        <include content="View_MediaList_Include" condition="!Window.IsVisible(videos)">
-            <param name="id">507</param>
-            <param name="viewtype_label">$LOCALIZE[31479]</param>
-            <param name="visible">$EXP[Exp_View_507]</param>
+    </include>
+
+    <!-- Square List -->
+    <include name="View_585_Square_List">
+        <include content="View_MediaList_Include">
+            <param name="id">585</param>
+            <param name="viewtype_label">$LOCALIZE[31636]</param>
+            <param name="visible">$EXP[Exp_View_585]</param>
             <param name="left">0</param>
             <param name="right">692</param>
             <param name="top">130</param>
@@ -48,11 +52,11 @@
     </include>
 
     <!-- Expanded List -->
-    <include name="View_508_Expanded_List">
+    <include name="View_582_Expanded_List">
         <include content="View_MediaList_Include" condition="Window.IsVisible(videos)">
-            <param name="id">508</param>
+            <param name="id">582</param>
             <param name="viewtype_label">$LOCALIZE[31581]</param>
-            <param name="visible">$EXP[Exp_View_508]</param>
+            <param name="visible">$EXP[Exp_View_582]</param>
             <param name="left">-40</param>
             <param name="right">470</param>
             <param name="top">130</param>
@@ -67,9 +71,9 @@
             <include>View_Media_Poster</include>
         </include>
         <include content="View_MediaList_Include" condition="!Window.IsVisible(videos)">
-            <param name="id">508</param>
+            <param name="id">582</param>
             <param name="viewtype_label">$LOCALIZE[31581]</param>
-            <param name="visible">$EXP[Exp_View_508]</param>
+            <param name="visible">$EXP[Exp_View_582]</param>
             <param name="left">-40</param>
             <param name="right">652</param>
             <param name="top">150</param>
@@ -86,11 +90,11 @@
     </include>
 
     <!-- FlixArt List -->
-    <include name="View_509_Flixart_List">
+    <include name="View_583_Flixart_List">
         <include content="View_MediaList_Include">
-            <param name="id">509</param>
+            <param name="id">583</param>
             <param name="viewtype_label">$LOCALIZE[31480]</param>
-            <param name="visible">$EXP[Exp_View_509]</param>
+            <param name="visible">$EXP[Exp_View_583]</param>
             <param name="right">704</param>
             <param name="top">400</param>
             <param name="focusposition">1</param>
@@ -102,11 +106,11 @@
     </include>
 
     <!-- FlixArt List -->
-    <include name="View_549_Flixart_List">
+    <include name="View_584_Flixart_List">
         <include content="View_MediaList_Include">
-            <param name="id">549</param>
+            <param name="id">584</param>
             <param name="viewtype_label">$LOCALIZE[31040]</param>
-            <param name="visible">$EXP[Exp_View_549]</param>
+            <param name="visible">$EXP[Exp_View_584]</param>
             <param name="right">984</param>
             <param name="top">400</param>
             <param name="focusposition">1</param>
@@ -130,9 +134,19 @@
                 <texture colordiffuse="main_fg_12" border="20">common/box.png</texture>
             </control>
             <control type="image">
-                <texture diffuse="diffuse/square_w585_h585.png" background="true">$INFO[ListItem.Icon]</texture>
+                <texture diffuse="diffuse/square_w612_h612.png" background="true">$INFO[ListItem.Icon]</texture>
                 <fadetime>background_fadetime</fadetime>
                 <aspectratio scalediffuse="false">scale</aspectratio>
+                <visible>![$EXP[Exp_IsGenre] | $EXP[Exp_IsStudio] | $EXP[Exp_IsCountry]]</visible>
+            </control>
+            <control type="group">
+                <visible>[$EXP[Exp_IsGenre] | $EXP[Exp_IsStudio] | $EXP[Exp_IsCountry]]</visible>
+                <include content="Object_Layout_Image_Icon">
+                    <param name="listitem">ListItem</param>
+                    <param name="icon_diffuse">diffuse/square_w612_h612.png</param>
+                    <param name="genre_bordersize">140</param>
+                    <param name="other_bordersize">56</param>
+                </include>
             </control>
         </control>
     </include>
@@ -150,7 +164,7 @@
                     <texture colordiffuse="main_fg_12" border="20">common/box.png</texture>
                 </control>
                 <control type="image">
-                    <texture diffuse="diffuse/poster_w410_h585.png" background="true">$PARAM[image]</texture>
+                    <texture diffuse="diffuse/poster_w430_h612.png" background="true">$PARAM[image]</texture>
                     <fadetime>background_fadetime</fadetime>
                     <aspectratio scalediffuse="false">scale</aspectratio>
                 </control>
@@ -169,7 +183,7 @@
                 <texture colordiffuse="main_fg_12" border="20">common/box.png</texture>
             </control>
             <control type="image">
-                <texture diffuse="diffuse/landscape_w1040_h585.png" background="true">$VAR[Image_Landscape]</texture>
+                <texture diffuse="diffuse/landscape_w1088_h612.png" background="true">$VAR[Image_BasicList_Landscape]</texture>
                 <fadetime>background_fadetime</fadetime>
                 <aspectratio scalediffuse="false">keep</aspectratio>
             </control>
@@ -191,7 +205,7 @@
                     <width>280</width>
                     <include content="Layout_Poster">
                         <param name="icon">$VAR[Image_Poster]</param>
-                        <param name="diffuse">diffuse/poster_w217_h310.png</param>
+                        <param name="diffuse">diffuse/poster_w240_h351.png</param>
                         <param name="indicator">true</param>
                         <param name="item_w">240</param>
                         <param name="item_h">351</param>
@@ -208,7 +222,7 @@
                     <width>664</width>
                     <include content="Layout_Poster">
                         <param name="icon">$VAR[Image_Landscape]</param>
-                        <param name="diffuse">diffuse/landscape_w570_h320.png</param>
+                        <param name="diffuse">diffuse/landscape_w624_h351.png</param>
                         <param name="indicator">true</param>
                         <param name="item_w">624</param>
                         <param name="item_h">351</param>
@@ -250,7 +264,7 @@
                         <right>-60</right>
                         <onleft>600</onleft>
                         <onright>611</onright>
-                        <onleft>ActivateWindow(1171)</onleft>
+                        <include>Action_View_Movement_OnLeft</include>
                         <include content="Action_View_Movement_OnBack">
                             <param name="id">$PARAM[id]</param>
                             <param name="onback">True</param>
