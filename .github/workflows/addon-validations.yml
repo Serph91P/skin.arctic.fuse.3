@@ -20,7 +20,7 @@ jobs:
       contents: read
       id-token: write
     needs: tests
-    uses: Serph91P/repository.serph91p/.github/workflows/reusable-addon-package.yml@a554cd91f5fd94635b859835ae9cfff14f70a46d
+    uses: Serph91P/repository.serph91p/.github/workflows/reusable-addon-package.yml@678ccfa070b6f5ee4439d2ad18d0e173eac5a92f
     with:
       addon_id: skin.arctic.fuse.3
       runtime_entries_json: '["addon.xml","LICENSE.txt","1080i/","colors/","extras/","fanart.jpg","fonts/","icon.png","language/","media/","shortcuts/"]'

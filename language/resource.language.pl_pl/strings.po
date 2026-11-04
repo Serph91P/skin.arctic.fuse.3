@@ -392,7 +392,7 @@ msgstr "Etykiety zamiast pól tekstowych"
 #: /1080i/Dialog_DialogCustom.xml
 msgctxt "#31080"
 msgid "Button"
-msgstr "Przycisk"fCombined
+msgstr "Przycisk"
 
 #: /1080i/Dialog_DialogCustom.xml
 msgctxt "#31081"
