@@ -60,7 +60,7 @@ def prepare(sha,branch):
     git('add','addon.xml',str(STATE))
     git('commit','-m','chore: track upstream '+sha[:12]+' as '+version)
     # Tests must pass before a candidate can be pushed or announced.
-    run('python3','-m','unittest','discover','-s','tests','-v')
+    subprocess.run(['python3','-B','-m','unittest','discover','-s','tests','-v'],check=True)
     return {'status':'candidate','version':version}
 
 
