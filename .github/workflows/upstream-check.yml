@@ -1,0 +1,28 @@
+name: Daily upstream check
+on:
+  schedule:
+    - cron: '23 5 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+  issues: write
+  actions: write
+concurrency:
+  group: upstream-maintenance
+  cancel-in-progress: false
+jobs:
+  check:
+    if: github.repository == 'Serph91P/skin.arctic.fuse.3'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          ref: omega
+          fetch-depth: 0
+      - name: Prepare only a changed upstream revision
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          python3 scripts/upstream_update.py
